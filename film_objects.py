@@ -47,23 +47,6 @@ with engine.connect() as conn:
 
 print("*******************************************************************************")
 
-stmt = select(movies_table).where(movies_table.c.title == "Megan")
-
-print(stmt)
-
-with engine.connect() as conn:
-    for row in conn.execute(stmt):
-        print(row)
-
-stmt = select(movies_table).where(movies_table.c.title == "Twister")
-
-with engine.connect() as conn:
-    for row in conn.execute(stmt):
-        print(row)
-
-print("*******************************************************************")
-
-
 
 genre_to_add_1=[
     (2023,"Megan", "scifi"),
@@ -79,8 +62,3 @@ with engine.connect() as conn:
     conn.execute(stmt)
     conn.commit()
 
-stmt = select(genre_table).where(genre_table.c.movie_title =="Megan")
-
-with engine.connect() as conn:
-    for row in conn.execute(stmt):
-        print(row)
