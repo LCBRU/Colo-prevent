@@ -1,15 +1,15 @@
 from flask import Flask, render_template,redirect
 from flask_wtf import FlaskForm
 from wtforms import StringField, DateField, IntegerField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Optional
 import os
 SECRET_KEY = os.urandom(32)
 
 
 class SupplyForm(FlaskForm):
-    equipment = StringField('equipment', validators=[DataRequired()])
-    batch_number = IntegerField('batch_number', validators=[DataRequired()])
-    disposal_date = DateField('disposal_date', validators=[DataRequired()])
+    equipment = StringField('equipment', validators=[Optional()])
+    batch_number = IntegerField('batch_number', validators=[Optional()])
+    disposal_date = DateField('disposal_date', validators=[Optional()])
 
 
 app = Flask(__name__)
