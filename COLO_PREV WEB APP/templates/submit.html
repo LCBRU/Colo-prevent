@@ -8,41 +8,23 @@
 <body>
     <h1>Colo-prevent supplies management</h1>
     <form method="POST" action="{{url_for('success')}}">
-    {% for _ in range(10) %}
+   
     <div class="basic_fields">
         {{ form.csrf_token }}
-        {{ form.equipment.label }} {{ form.equipment(size=20) }}
-    
-        {{form.batch_number.label}} {{form.batch_number(size=20)}}
-        {{form.disposal_date.label}} {{form.disposal_date(size=20)}}
-        <input type="submit" value="Submit">
-        <input type="submit" value="Delete">
-        <input type="submit" value="Edit">
-   
+        {% for fields in form.more_fields %}
+            {{fields.form.equipment.label}} {{fields.form.equipment}}
+            {{fields.form.batch_number.label}} {{fields.form.batch_number}}
+            {{fields.form.disposal_date.label}} {{fields.form.disposal_date}}
+            {{form.submit}}
+            {{form.edit}}
+            {{form.delete}}
+            <br>
+           
+        
+        {% endfor %}
        
-    {% if form.equipment.errors %}
-       <ul class="errors">
-       {% for error in form.equipment.errors %}
-       <li>{{ error }}</li>
-       {% endfor %}
-       </ul>
-    {% endif %}
-    {% if form.batch_number.errors %}
-       <ul class="errors">
-       {% for error in form.batch_number.errors %}
-       <li>{{ error }}</li>
-       {% endfor %}
-       </ul>
-    {% endif %}
-    {% if form.disposal_date.errors %}
-       <ul class="errors">
-       {% for error in form.disposal_date.errors %}
-       <li>{{ error }}</li>
-       {% endfor %}
-       </ul>
-    {% endif %}
+       
 
-    {% endfor %}
 </div>
     </form>
 </body>
