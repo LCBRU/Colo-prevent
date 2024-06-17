@@ -1,0 +1,20 @@
+{% extends 'base.html'%}
+
+{% block body %}
+<h1>Add a new supplies request</h1>
+<form method="POST" action="/add">
+    {{ form.csrf_token }}
+
+    <p>{{ form.id.label }} {{ form.id(size=50) }}</p>
+    <br>
+    <p>{{ form.equipment.label }} {{ form.equipment(size=50) }}</p>
+    <br> 
+   <p> {{ form.total_requested.label }} {{ form.total_requested(size=50) }}</p>
+   <br>
+    
+    <p>{{ form.date_requested.label }} {{ form.date_requested(size=50) }}</p>
+    <br>
+    
+    {{ form.submit.label }} {{ form.submit(size=50) }}
+</form>
+{% endblock %}
