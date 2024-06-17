@@ -62,3 +62,7 @@ def submissions():
 
     return render_template("submissions.html", s_list =supply_list)
 
+@app.route('/delete', methods=['GET', 'POST'])
+def delete():
+    return render_template("delete.html")
+
