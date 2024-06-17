@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COLO-PREVENT</title>
+</head>
+<body>
+    <h1>Colo-prevent supplies management</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Batch Number</th>
+                <th>Disposal Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for e in equipment %}
+                <tr>
+                    <td>
+                        <a href="{{ url_for('submit', id=loop.index0)}}">Edit</a>
+                        <a href="{{ url_for('delete', id=loop.index0)}}">Delete</a>
+                    </td>
+                    <td>{{ e['name'] }}</td>
+                    <td>{{ e['batch_number'] }}</td>
+                    <td>{{ e['disposal_date'] }}</td>
+                </tr>
+            {% endfor %}        
+        </tbody>
+    </table>
+    <a href="{{ url_for('submit')}}">Add New Item</a>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COLO-PREVENT</title>
+</head>
+<body>
+    <h1>Colo-prevent supplies management</h1>
+    <form method="POST" action="{{url_for('submit', id=id)}}">
+    <div class="basic_fields">
+        {{ form.csrf_token }}
+        {{ form.equipment.label }} {{ form.equipment(size=20) }}
+    
+        {{form.batch_number.label}} {{form.batch_number(size=20)}}
+        {{form.disposal_date.label}} {{form.disposal_date(size=20)}}
+        <input type="submit" value="Submit">
+   
+       
+    {% if form.equipment.errors %}
+       <ul class="errors">
+       {% for error in form.equipment.errors %}
+       <li>{{ error }}</li>
+       {% endfor %}
+       </ul>
+    {% endif %}
+    {% if form.batch_number.errors %}
+       <ul class="errors">
+       {% for error in form.batch_number.errors %}
+       <li>{{ error }}</li>
+       {% endfor %}
+       </ul>
+    {% endif %}
+    {% if form.disposal_date.errors %}
+       <ul class="errors">
+       {% for error in form.disposal_date.errors %}
+       <li>{{ error }}</li>
+       {% endfor %}
+       </ul>
+    {% endif %}
+</div>
+    </form>
+</body>
+</html>

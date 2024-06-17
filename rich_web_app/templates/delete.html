@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COLO-PREVENT</title>
+</head>
+<body>
+    <h1>Do you want to delete {{equipment.equipment}}</h1>
+    <form method="POST" action="{{url_for('delete', id=id)}}">
+        {{ form.csrf_token }}
+        <input type="submit" value="Delete">
+    </form>
+</body>
+</html>
