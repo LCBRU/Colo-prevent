@@ -18,6 +18,13 @@ class RequestForm(FlaskForm):
 class DeleteData(FlaskForm):
     submit = SubmitField('Delete')
 
+class EditData(FlaskForm):
+    equipment = StringField('Equipment', validators=[DataRequired()])
+    total_requested =IntegerField('Total requested', validators=[DataRequired()])
+    date_requested =DateField('Date requested', validators=[DataRequired()])
+    submit = SubmitField('Edit')
+
+
 app = Flask(__name__)
 
 SECRET_KEY = os.urandom(32)
@@ -81,5 +88,20 @@ def delete(id):
 
 @app.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit(id):
-    return render_template('edit.html', id=id)
+    ed_form=EditData()
+    edit_eqipment = ed_form.equipment.data
+    edit_date_req  = ed_form.date_requested .data
+    edit_total_req = ed_form.total_requested.data
+    
+    if ed_form.validate_on_submit():
+        edit_data = pd.read_csv("ordered.csv")
+        edit_data.at[id,'Equipment']=edit_eqipment
+        edit_data.at[id,'Date ordered']=edit_date_req
+        edit_data.at[id,'Total requested']=edit_total_req
+        edit_data.reset_index(drop=True, inplace=True)
+        edit_data.to_csv('ordered.csv', index=False)
+        print(edit_data)
+        
+
+    return render_template('edit.html', ed_form = ed_form, id=id)
 
