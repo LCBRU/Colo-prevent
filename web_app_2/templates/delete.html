@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %} Delete {% endblock %}
+
+{% block body %}
+
+
+<h3>Do you wish to delete? </h3>
+
+<form method="POST" action="{{url_for('delete', id=id)}}">
+    {{ del_form.csrf_token }}
+
+<p>This action is permanent</p>
+
+    {{del_form.submit }} 
+</form>
+
+
+{% endblock %}
