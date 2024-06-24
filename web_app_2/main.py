@@ -1,4 +1,4 @@
-from flask import Flask,render_template, request
+from flask import Flask,render_template, request, redirect
 from flask_wtf import FlaskForm
 from wtforms import StringField,DateField,IntegerField,SubmitField
 from wtforms.validators import DataRequired
@@ -6,6 +6,7 @@ import os
 import csv
 from csv import DictWriter
 import pandas as pd 
+from datetime import datetime
 
 
 
@@ -49,6 +50,7 @@ def add():
             dictwriter_object = DictWriter(f_object, fieldnames=field_names)
             dictwriter_object.writerow(dict)
             f_object.close()
+            return redirect("/submissions")
         
             
             
@@ -78,9 +80,10 @@ def delete(id):
         data.drop(data.index[row_id], inplace=True)
         data.reset_index(drop=True, inplace=True)
         data.to_csv('ordered.csv', index=False)
+        return redirect("/submissions")
 
 
-        print (data)
+        
     
 
     
@@ -88,10 +91,22 @@ def delete(id):
 
 @app.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit(id):
-    ed_form=EditData()
+    edit_data = pd.read_csv("ordered.csv") #new 
+    prev_eqip=edit_data['Equipment'].loc[edit_data.index[id]]
+
+    extract_date_req= edit_data['Date ordered'].loc[edit_data.index[id]]
+    date= extract_date_req
+    # datetime_object =datetime.strptime(date, "%Y%m%d")
+    # prev_date_req = datetime_object.strftime("%d%m%Y") 
+    # print(datetime_object)
+
+    prev_total_req = edit_data['Total requested'].loc[edit_data.index[id]] 
+    ed_form=EditData(equipment=prev_eqip,total_requested=prev_total_req) #date causing the error, user will need to type in prev date
+
     edit_eqipment = ed_form.equipment.data
-    edit_date_req  = ed_form.date_requested .data
-    edit_total_req = ed_form.total_requested.data
+    edit_date_req  = ed_form.date_requested.data
+    edit_total_req = ed_form.total_requested.data   
+
     
     if ed_form.validate_on_submit():
         edit_data = pd.read_csv("ordered.csv")
@@ -100,7 +115,7 @@ def edit(id):
         edit_data.at[id,'Total requested']=edit_total_req
         edit_data.reset_index(drop=True, inplace=True)
         edit_data.to_csv('ordered.csv', index=False)
-        print(edit_data)
+        return redirect("/submissions")
         
 
     return render_template('edit.html', ed_form = ed_form, id=id)
