@@ -1,0 +1,19 @@
+{% extends 'base.html'%}
+
+{% block body %}
+<h1>Add a new supplies request</h1>
+<form method="POST" action="{{url_for('edit', id=id)}}">
+    {{ ed_form.csrf_token }}
+    <br>
+    <p>{{ ed_form.equipment.label }} {{ ed_form.equipment(size=50) }}</p>
+    <br> 
+   <p> {{ ed_form.total_requested.label }} {{ ed_form.total_requested(size=50) }}</p>
+   <br> 
+    
+   <p>Please enter the date of this edit</p>
+    <p>{{ ed_form.date_requested.label }} {{ ed_form.date_requested(size=50) }}</p>
+    <br>
+    
+    {{ ed_form.submit.label }} {{ ed_form.submit(size=50) }}
+</form>
+{% endblock %}
